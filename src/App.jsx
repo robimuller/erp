@@ -1,15 +1,15 @@
 // src/App.jsx
+import './firebase-config'
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage'; // Fix the typo here
+import RegisterPage from './pages/RegisterPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import DashboardPage from './pages/DashboardPage';
-
-// Import other pages as needed
+import CRMPage from './pages/CRMPage';
 
 function App() {
   return (
@@ -19,10 +19,11 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/*" element={<DashboardPage />}>
-          <Route path="dashboard" element={<div>Dashboard Content</div>} />
-          {/* Define other nested routes here */}
-        </Route>
+        {/* Dashboard layout route */}
+        <Route path="/dashboard" element={<DashboardPage />}>
+          <Route index element={<div>Welcome to the Dashboard</div>} /> {/* Default dashboard view */}
+          <Route path="crm" element={<CRMPage />} />
+ó        </Route>
       </Routes>
     </Router>
   );

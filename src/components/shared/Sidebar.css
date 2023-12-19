@@ -1,0 +1,87 @@
+/* Sidebar.css */
+.sidebar {
+    background-color: #343a40;
+    /* A Bootstrap dark shade */
+    color: white;
+    height: 100vh;
+    padding-top: 1rem;
+    position: fixed;
+    /* Fixed position */
+    top: 0;
+    left: 0;
+    /* Align to the left */
+    z-index: 1000;
+    /* Ensure it's above other content */
+    transition: width 0.5s;
+    /* Smooth transition for collapsing */
+}
+
+.sidebar .btn {
+    color: white;
+    /* Menu button color */
+    margin-bottom: 1rem;
+}
+
+.sidebar .sidebar-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    /* Smooth transition for hover */
+}
+
+.sidebar-item:hover {
+    background-color: #495057;
+    /* A Bootstrap hover shade */
+}
+
+.sidebar-item .bi {
+    font-size: 1.5rem;
+    /* Icon size */
+    margin-right: 1rem;
+}
+
+.sidebar-item .sidebar-text {
+    flex-grow: 1;
+}
+
+.collapsed .sidebar-text {
+    display: none;
+    /* Hide text when collapsed */
+}
+
+.collapsed {
+    width: 5vw;
+    /* Smaller width when collapsed */
+}
+
+/* Additional CSS to push the content to the right when sidebar is expanded */
+.dashboard-content {
+    margin-left: 20vw;
+    /* Same as the expanded sidebar width */
+    transition: margin-left 0.5s;
+    /* Smooth transition for sidebar toggle */
+}
+
+.collapsed~.dashboard-content {
+    margin-left: 5vw;
+    /* Adjust margin when sidebar is collapsed */
+}
+
+/* Adjustments for smaller screens or when you want the sidebar to always be collapsed */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 5vw;
+    }
+
+    .sidebar-text {
+        display: none;
+    }
+}

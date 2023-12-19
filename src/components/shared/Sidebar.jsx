@@ -1,15 +1,34 @@
 // src/components/Sidebar.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import 'bootstrap-icons/font/bootstrap-icons.css'; // Import Bootstrap Icons
+import './Sidebar.css'; // Your custom CSS for the sidebar
 
 const Sidebar = () => {
+  const [collapsed, setCollapsed] = useState(false);
+
+  const toggleSidebar = () => {
+    setCollapsed(!collapsed);
+  };
+
+  const sidebarClass = collapsed ? "sidebar collapsed" : "sidebar";
+
   return (
-    <nav className="sidebar d-flex flex-column">
-      <NavLink to="/dashboard" className="sidebar-item">Home</NavLink>
-      <NavLink to="/warehouse-management" className="sidebar-item">Warehouse Management</NavLink>
-      <NavLink to="/logistics" className="sidebar-item">Logistics</NavLink>
-      <NavLink to="/crm" className="sidebar-item">CRM</NavLink>
-    </nav>
+    <div className={sidebarClass} style={{ width: collapsed ? '5vw' : '20vw' }}>
+      <button className="btn" onClick={toggleSidebar}>
+        <i className="bi bi-list"></i>
+      </button>
+      <div className="sidebar-items">
+        <NavLink to="/dashboard" className="sidebar-item">
+          <i className="bi bi-house-door"></i>
+          <span className="sidebar-text">Home</span>
+        </NavLink>
+        <NavLink to="/dashboard/crm" className="sidebar-item">
+          <i className="bi bi-person-lines-fill"></i>
+          <span className="sidebar-text">CRM</span>
+        </NavLink>
+      </div>
+    </div>
   );
 };
 
