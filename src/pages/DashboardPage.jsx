@@ -1,15 +1,20 @@
-// src/pages/DashboardPage.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/shared/Sidebar';
-import './DashboardPage.css'; // Ensure this file exists and contains your custom styles
+import './DashboardPage.css';
 
 const DashboardPage = () => {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+
+  const handleSidebarCollapse = (collapsed) => {
+    setIsSidebarCollapsed(collapsed);
+  };
+
   return (
     <div className="d-flex">
-      <Sidebar />
-      <div className="main-content flex-grow-1">
-        <Outlet />  {/* This will render the nested route components */}
+      <Sidebar onCollapse={handleSidebarCollapse} />
+      <div className={`main-content ${isSidebarCollapsed ? 'expanded' : ''}`}>
+        <Outlet />
       </div>
     </div>
   );

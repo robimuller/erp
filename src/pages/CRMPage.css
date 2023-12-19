@@ -1,0 +1,8 @@
+.edit-mode-input {
+    background-color: #f8f9fa; /* Light grey, adjust as needed */
+    color: #495057; /* Dark grey for text, adjust as needed */
+    border: 1px solid #ced4da; /* Light border, adjust as needed */
+    padding: .375rem .75rem; /* Bootstrap-like padding */
+    border-radius: .25rem; /* Bootstrap-like border radius */
+  }
+  

@@ -4,11 +4,12 @@ import { NavLink } from 'react-router-dom';
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Import Bootstrap Icons
 import './Sidebar.css'; // Your custom CSS for the sidebar
 
-const Sidebar = () => {
+const Sidebar = ({ onCollapse }) => {
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
+    onCollapse(!collapsed); // Inform parent component about the change
   };
 
   const sidebarClass = collapsed ? "sidebar collapsed" : "sidebar";

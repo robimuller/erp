@@ -1,112 +1,117 @@
-// src/pages/CRMPage.jsx
-
-import React, { useState } from 'react';
-import { addCompany } from '../services/crmService';
+import React, { useState, useEffect } from 'react';
+import { Link, useRoutes } from 'react-router-dom';
+import { getCompanies, updateCompany } from '../services/crmService'; // Import updateCompany here
+import CompanyRegistration from '../components/crm/CompanyRegistration';
+import './CRMPage.css';
 
 const CRMPage = () => {
-  const initialCompanyState = {
-    name: '',
-    address: '',
-    contactInfo: { phone: '', email: '' },
-    industry: '',
-    status: '',
-    website: '',
-    size: '', // Number of employees
-    founded: '', // Year of foundation
+  const [companies, setCompanies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      const data = await getCompanies();
+      setCompanies(data);
+    };
+    fetchCompanies();
+  }, []);
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
-  const [company, setCompany] = useState(initialCompanyState);
+  const filteredCompanies = companies.filter(company =>
+    company.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-  
-    if (name === "phone" || name === "email") {
-      setCompany({
-        ...company,
-        contactInfo: {
-          ...company.contactInfo,
-          [name]: value
-        }
-      });
-    } else {
-      setCompany({ ...company, [name]: value });
-    }
+  const routes = useRoutes([
+    {
+      path: '/',
+      element: <CRMContent
+        companies={filteredCompanies}
+        searchTerm={searchTerm}
+        handleSearchChange={handleSearchChange}
+        setCompanies={setCompanies}  // Pass setCompanies as a prop
+      />
+    },
+    { path: 'register-company', element: <CompanyRegistration /> }
+  ]);
+
+
+  return (
+    <div>
+      {routes}
+    </div>
+  );
+};
+
+const CRMContent = ({ companies, searchTerm, handleSearchChange, setCompanies }) => {
+  const [selectedCompany, setSelectedCompany] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editableCompany, setEditableCompany] = useState(null);
+
+  const handleCompanyClick = (company) => {
+    setSelectedCompany(company);
+    setEditableCompany({ ...company }); // Create a copy of the company object
+    setIsEditMode(false);
   };
-  
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const companyId = await addCompany(company);
-    if (companyId) {
-      // Handle successful registration
-      setCompany(initialCompanyState); // Reset form after submission
+  const handleSave = async () => {
+    if (isEditMode && editableCompany) {
+      try {
+        await updateCompany(selectedCompany.id, editableCompany);
+        // Update the local state to reflect changes
+        setCompanies(companies.map(comp => comp.id === selectedCompany.id ? editableCompany : comp));
+        setSelectedCompany(editableCompany);
+        setIsEditMode(false);
+      } catch (error) {
+        console.error("Error saving company: ", error);
+        // Handle the error appropriately
+      }
     }
   };
 
   return (
-    <div className="crm-page container mt-5">
-      <h1 className="display-4">Register New Company</h1>
-      <p className="lead">
-        Add company details to your CRM system.
-      </p>
+    <>
+      <div className="d-flex justify-content-between align-items-center bg-light p-3 sticky-top">
+        <input
+          type="text"
+          className="form-control me-2 flex-grow-1"
+          placeholder="Search by name..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+        <Link to="register-company" className="btn btn-primary ms-2 btn-sm d-flex align-items-center">
+          <i className="bi bi-plus-circle"></i>
+        </Link>
+      </div>
 
-      <form onSubmit={handleSubmit}>
-        {/* Basic Information */}
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">Company Name</label>
-          <input type="text" className="form-control" id="name" name="name" value={company.name} onChange={handleChange} required />
-        </div>
+      <div className="d-flex">
+        <ul className="list-group list-group-flush flex-grow-1">
+          {companies.map(company => (
+            <li key={company.id} className="list-group-item" onClick={() => handleCompanyClick(company)}>
+              {company.name}
+            </li>
+          ))}
+        </ul>
 
-        <div className="mb-3">
-          <label htmlFor="address" className="form-label">Address</label>
-          <input type="text" className="form-control" id="address" name="address" value={company.address} onChange={handleChange} required />
-        </div>
-
-        {/* Contact Information */}
-        <div className="mb-3">
-          <label htmlFor="phone" className="form-label">Phone</label>
-          <input type="tel" className="form-control" id="phone" name="phone" value={company.contactInfo.phone} onChange={handleChange} />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email</label>
-          <input type="email" className="form-control" id="email" name="email" value={company.contactInfo.email} onChange={handleChange} />
-        </div>
-
-        {/* Additional Details */}
-        <div className="mb-3">
-          <label htmlFor="industry" className="form-label">Industry</label>
-          <input type="text" className="form-control" id="industry" name="industry" value={company.industry} onChange={handleChange} />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="status" className="form-label">Status</label>
-          <select className="form-select" id="status" name="status" value={company.status} onChange={handleChange}>
-            <option value="">Select Status</option>
-            <option value="prospect">Prospect</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="website" className="form-label">Website</label>
-          <input type="url" className="form-control" id="website" name="website" value={company.website} onChange={handleChange} />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="size" className="form-label">Size (Number of Employees)</label>
-          <input type="number" className="form-control" id="size" name="size" value={company.size} onChange={handleChange} />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="founded" className="form-label">Founded (Year)</label>
-          <input type="number" className="form-control" id="founded" name="founded" value={company.founded} onChange={handleChange} />
-        </div>
-
-        <button type="submit" className="btn btn-primary">Register Company</button>
-      </form>
-    </div>
+        {selectedCompany && (
+          <div className="company-details-panel border-start p-3 bg-light">
+            <h3>{isEditMode ? <input type="text"       className="edit-mode-input"
+ value={editableCompany.name} onChange={e => setEditableCompany({ ...editableCompany, name: e.target.value })} /> : selectedCompany.name}</h3>
+            <p>Address: {isEditMode ? <input type="text"       className="edit-mode-input"
+ value={editableCompany.address} onChange={e => setEditableCompany({ ...editableCompany, address: e.target.value })} /> : selectedCompany.address}</p>
+            <p>Email: {isEditMode ? <input type="text"       className="edit-mode-input"
+ value={editableCompany.contact.email} onChange={e => setEditableCompany({ ...editableCompany, contact: { ...editableCompany.contact, email: e.target.value } })} /> : selectedCompany.contact.email}</p>
+            <button className="btn btn-secondary" onClick={() => setSelectedCompany(null)}>Close</button>
+            &nbsp;
+            <button className="btn btn-primary" onClick={isEditMode ? handleSave : () => setIsEditMode(true)}>
+              {isEditMode ? 'Save' : 'Edit'}
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
