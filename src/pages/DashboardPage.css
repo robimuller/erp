@@ -2,7 +2,7 @@
   padding: 1rem;
   height: 100vh;
   margin-left: 20vw; /* Space for the expanded sidebar */
-  width: 80vw;
+  width: 85vw;
   transition: margin-left 0.3s ease, width 0.3s ease; /* Match the transition effect */
 }
 
@@ -13,6 +13,6 @@
 
 /* Default state when sidebar is not collapsed */
 .main-content {
-  margin-left: 20vw; /* Space for the expanded sidebar */
-  width: 80vw;
+  margin-left: 15vw; /* Space for the expanded sidebar */
+  width: 85vw;
 }

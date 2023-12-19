@@ -46,6 +46,15 @@
     font-size: 1.5rem;
     /* Icon size */
     margin-right: 1rem;
+    color: gray;
+}
+
+.sidebar-item span {
+    color: gray;
+}
+
+.sidebar-item:hover .bi, .sidebar-item:hover span {
+    color: white;
 }
 
 .sidebar-item .sidebar-text {

@@ -15,7 +15,7 @@ const Sidebar = ({ onCollapse }) => {
   const sidebarClass = collapsed ? "sidebar collapsed" : "sidebar";
 
   return (
-    <div className={sidebarClass} style={{ width: collapsed ? '5vw' : '20vw' }}>
+    <div className={sidebarClass} style={{ width: collapsed ? '5vw' : '15vw' }}>
       <button className="btn" onClick={toggleSidebar}>
         <i className="bi bi-list"></i>
       </button>
@@ -26,7 +26,7 @@ const Sidebar = ({ onCollapse }) => {
         </NavLink>
         <NavLink to="/dashboard/crm" className="sidebar-item">
           <i className="bi bi-person-lines-fill"></i>
-          <span className="sidebar-text">CRM</span>
+          <span className="sidebar-text">Ügyfélkezelés</span>
         </NavLink>
       </div>
     </div>
