@@ -28,6 +28,10 @@ const Sidebar = ({ onCollapse }) => {
           <i className="bi bi-person-lines-fill"></i>
           <span className="sidebar-text">Ügyfélkezelés</span>
         </NavLink>
+        <NavLink to="/dashboard/workflow" className="sidebar-item">
+          <i className="bi bi-briefcase-fill"></i>
+          <span className="sidebar-text">Feladatkezelés</span>
+        </NavLink>
       </div>
     </div>
   );

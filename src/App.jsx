@@ -10,6 +10,7 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import DashboardPage from './pages/DashboardPage';
 import CRMPage from './pages/CRMPage';
 import CompanyRegistration from './components/crm/CompanyRegistration'; // Adjust the import path as necessary
+import Workflow from './pages/Workflow';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="crm/*" element={<CRMPage />}>
             <Route path="register-company" element={<CompanyRegistration />} />
           </Route>
+          <Route path="workflow/*" element={<Workflow/>} />
         </Route>
       </Routes>
     </Router>
