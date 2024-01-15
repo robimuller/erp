@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { addWorkflow } from '../../services/workflowService';
+import './AddWorkflowForm.css';
 
-const AddWorkflowForm = ({ userId, onWorkflowAdded }) => {
+const AddWorkflowForm = ({ userId}) => {
   const [workflowName, setWorkflowName] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState(''); // Keep as is, but make optional
@@ -21,7 +22,6 @@ const AddWorkflowForm = ({ userId, onWorkflowAdded }) => {
 
       try {
           await addWorkflow(newWorkflow);
-          onWorkflowAdded();
           setWorkflowName('');
           setStartDate('');
           setEndDate('');
@@ -31,14 +31,51 @@ const AddWorkflowForm = ({ userId, onWorkflowAdded }) => {
       }
   };
   
-    return (
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={workflowName} onChange={(e) => setWorkflowName(e.target.value)} placeholder="Enter workflow name" />
-        <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} placeholder="Start Date" />
-        <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} placeholder="End Date" />
-        <button type="submit">Add Workflow</button>
-      </form>
-    );
+  return (
+    <form onSubmit={handleSubmit} className="container mt-5">
+      <div className="row g-3 align-items-end">
+        <div className="col-md-4">
+          <label htmlFor="workflowName" className="form-label">Munkamenet neve</label>
+          <input 
+            type="text" 
+            className="form-control" 
+            id="workflowName" 
+            value={workflowName} 
+            onChange={(e) => setWorkflowName(e.target.value)} 
+            placeholder="Munkamenet neve" 
+          />
+        </div>
+  
+        <div className="col-md-3">
+          <label htmlFor="startDate" className="form-label">Projekt Kezdete</label>
+          <input 
+            type="date" 
+            className="form-control" 
+            id="startDate" 
+            value={startDate} 
+            onChange={(e) => setStartDate(e.target.value)} 
+          />
+        </div>
+  
+        <div className="col-md-3">
+          <label htmlFor="endDate" className="form-label">Projekt vége</label>
+          <input 
+            type="date" 
+            className="form-control" 
+            id="endDate" 
+            value={endDate} 
+            onChange={(e) => setEndDate(e.target.value)} 
+          />
+        </div>
+  
+        <div className="col-md-2">
+          <button type="submit" className="btn-primary">Munkamenet megkezdése</button>
+        </div>
+      </div>
+    </form>
+  );
+  
+  
   };
   
 

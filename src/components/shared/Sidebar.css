@@ -1,6 +1,6 @@
 /* Sidebar.css */
 .sidebar {
-    background-color: #343a40;
+    background-color: #1d4344;
     /* A Bootstrap dark shade */
     color: white;
     height: 100vh;
@@ -29,7 +29,7 @@
 
 .sidebar-item {
     display: flex;
-    align-items: center;
+    align-items: center;    
     padding: 0.5rem 1rem;
     color: white;
     text-decoration: none;
@@ -38,7 +38,7 @@
 }
 
 .sidebar-item:hover {
-    background-color: #495057;
+    background-color: #3e8e91;
     /* A Bootstrap hover shade */
 }
 

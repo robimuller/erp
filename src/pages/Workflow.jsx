@@ -43,10 +43,10 @@ const WorkflowPage = () => {
             <div className="add-workflow-form">
                 <AddWorkflowForm userId={currentUser?.uid} />
             </div>
-
+            <br />
             <div className="row">
                 <div className="col-md-12">
-                    <GanttChart workflows={workflows} />
+                    <GanttChart/>
                 </div>
 
             </div>
