@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import AddWorkflowForm from '../components/workflows/AddWorkflowForm';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import GanttChart from '../components/workflows/GanttChart';
 import { listenToWorkflowsForUser } from '../services/workflowService';
@@ -40,10 +39,6 @@ const WorkflowPage = () => {
 
     return (
         <div className="container workflow-page">
-            <div className="add-workflow-form">
-                <AddWorkflowForm userId={currentUser?.uid} />
-            </div>
-            <br />
             <div className="row">
                 <div className="col-md-12">
                     <GanttChart/>

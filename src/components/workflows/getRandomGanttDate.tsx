@@ -5,7 +5,7 @@ import {
     NoRepeatDataType,
     RepeatDataType,
     RawGanttDataType,
-  } from "react-virtual-gantt";
+  } from 
   
   function getRandomRepeatType(): DataRepeatTypes {
     const repeatTypes = [
